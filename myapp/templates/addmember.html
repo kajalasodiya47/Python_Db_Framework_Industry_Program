@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Free Web tutorials">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="John Doe">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .error {
+                color: red;
+            }
+            
+        </style>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>     
+<body class="theme-cyan">
+<section class="content home">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <h2>Add Society Member <small class="text-muted">Welcome to Digital Society</small></h2>
+            </div>            
+            <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+                  <ul class="breadcrumb float-md-right">
+                    <li class="breadcrumb-item"><a href="#"><i class="zmdi zmdi-home"></i> Digital Society</a></li>
+                    <li class="breadcrumb-item">Society Members</li>
+                  </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">                
+      <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+              <div class="body">
+                <form id="registrationForm">
+                    {% csrf_token %}
+                    <div class="row clearfix">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email">
+                                <span id="emailError" class="error"></span><br>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter First Name">
+                                <span id="firstnameError" class="error"></span><br>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Last Name">
+                                <span id="lastnameError" class="error"></span><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter Contact">
+                                <span id="contactError" class="error"></span><br>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="blockno" name="blockno" placeholder="Enter Block No.">
+                                <span id="blocknoError" class="error"></span><br>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="houseno" name="houseno" placeholder="Enter House No.">
+                                <span id="housenoError" class="error"></span><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="occupation" name="occupation" placeholder="Enter Occupation">
+                                <span id="occupationError" class="error"></span><br>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="bloodgroup" name="bloodgroup" placeholder="Enter Blood Group">
+                                <span id="bloodgroupError" class="error"></span><br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="vehicledetails" name="vehicledetails" placeholder="Enter Vehicle Details">
+                                <span id="vehicledetailsError" class="error"></span><br>
+                            </div>
+                        </div>
+                       <div class="col-sm-12">
+                            <div class="form-group">
+                                <textarea rows="4" class="form-control no-resize" id="jobaddress" name="job_address" placeholder="Enter Job Address"></textarea>
+                                <span id="jobaddressError" class="error"></span><br>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="submit" class="btn btn-primary btn-round" value="Submit"> 
+                        </div>
+                    </div>
+              </form>
+        <script>
+                    $(document).ready(function() {
+                        $('#registrationForm').submit(function(event) {
+                           event.preventDefault(); // Prevent default form submission
+                          
+                            // Validation
+                            var email = $('#email').val();
+                            var firstname = $('#firstname').val();
+                            var lastname = $('#lastname').val();
+                            var contact = $('#contact').val();
+                            var blockno = $('#blockno').val();
+                            var houseno = $('#houseno').val();
+                            var occupation = $('#occupation').val();
+                            var bloodgroup = $('#bloodgroup').val();
+                            var vehicledetails = $('#vehicledetails').val();
+                            var jobaddress = $('#jobaddress').val();
+                          
+                            var emailError = document.getElementById("emailError");
+                            var firstnameError = document.getElementById("firstnameError");
+                            var lastnameError = document.getElementById("lastnameError");
+                            var contactError = document.getElementById("contactError");
+                            var blocknoError = document.getElementById("blocknoError");
+                            var housenoError = document.getElementById("housenoError");
+                            var occupationError = document.getElementById("occupationError");
+                            var bloodgroupError = document.getElementById("bloodgroupError");
+                            var vehicledetailsError = document.getElementById("vehicledetailsError");
+                            var jobaddressError = document.getElementById("jobaddressError");
+
+                            var isValid = true;
+
+                            // Validate email
+                            if (email === "") {
+                                emailError.textContent = "Email address is required";
+                                isValid = false;
+                            } else {
+                                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                if (!emailPattern.test(email)) {
+                                    emailError.textContent = "Invalid email format";
+                                    isValid = false;
+                                } else {
+                                    emailError.textContent = "";
+                                }
+                            }
+                            // Validate first name
+                            if (firstname === "") {
+                                firstnameError.textContent = "First name is required";
+                                isValid = false;
+                            } else {
+                                firstnameError.textContent = "";
+                            }
+
+                             // Validate last name
+                             if (lastname === "") {
+                                lastnameError.textContent = "Last name is required";
+                                isValid = false;
+                            } else {
+                                lastnameError.textContent = "";
+                            }
+                            
+                            // Validate contact number
+                            if (contact === "") {
+                                contactError.textContent = "Contact number is required";
+                                isValid = false;
+                            } else {
+                                // Regular expression to validate contact number format (assuming a 10-digit number)
+                                var contactPattern = /^\d{10}$/;
+                                if (!contactPattern.test(contact)) {
+                                    contactError.textContent = "Invalid contact number format";
+                                    isValid = false;
+                                } else {
+                                    contactError.textContent = "";
+                                }
+                            }
+
+                            // Validate block number
+                            if (blockno === "") {
+                                blocknoError.textContent = "Block number is required";
+                                isValid = false;
+                            } else {
+                                blocknoError.textContent = "";
+                            }
+
+                            // Validate house number
+                            if (houseno === "") {
+                                housenoError.textContent = "House number is required";
+                                isValid = false;
+                            } else {
+                                housenoError.textContent = "";
+                            }
+
+                            // Validate occupation
+                            if (occupation === "") {
+                                occupationError.textContent = "Occupation is required";
+                                isValid = false;
+                            } else {
+                                occupationError.textContent = "";
+                            }
+
+                            // Validate blood group
+                            if (bloodgroup === "") {
+                                bloodgroupError.textContent = "Blood group is required";
+                                isValid = false;
+                            } else {
+                                // Regular expression to validate blood group format (assuming A+, A-, B+, B-, AB+, AB-, O+, O-)
+                                var bloodgroupPattern = /^(A|B|AB|O)[+-]$/;
+                                if (!bloodgroupPattern.test(bloodgroup)) {
+                                    bloodgroupError.textContent = "Invalid blood group format";
+                                    isValid = false;
+                                } else {
+                                    bloodgroupError.textContent = "";
+                                }
+                            }
+
+                            // Validate vehicle details
+                            if (vehicledetails === "") {
+                                vehicledetailsError.textContent = "Vehicle Details is required";
+                                isValid = false;
+                            } else {
+                                vehicledetailsError.textContent = "";
+                            }
+
+
+                           // Validate job address
+                            if (jobaddress === "") {
+                                jobaddressError.textContent = "Job address is required";
+                                isValid = false;
+                            } else {
+                                jobaddressError.textContent = "";
+                            }
+
+                          // AJAX Request
+                          if(isValid){
+                          $.ajax({
+                            type: 'POST',
+                            url: '/addmember/',
+                            data: {
+                               'email': email,
+                               'firstname': firstname,
+                               'lastname': lastname,
+                               'contact': contact,
+                               'blockno': blockno,
+                               'houseno': houseno,
+                               'occupation': occupation,
+                               'bloodgroup': bloodgroup,
+                               'vehicledetails': vehicledetails,
+                               'jobaddress': jobaddress,
+                            },
+                            success: function(response) {
+                              // Handle response if needed
+                              console.log(response);
+                            }
+                          });
+                        }
+                        return isValid;
+                        });
+                      });
+                      
+                      
+    </script>
+            
+             </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</section>
+</body>               
+</html>
+{% endblock %}

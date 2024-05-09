@@ -1,0 +1,68 @@
+{% extends 'base.html' %}   
+ 
+{% block content %}    
+<section class="content home">
+    {% if msg %}
+    <div class="alert alert-success" role="alert">
+          {{msg}}
+    </div>
+    {% endif %}
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>All Society Members <small class="text-muted">Welcome to Society Member</small></h2>
+                    </div>            
+                    <div class="col-lg-7 col-md-7 col-sm-12 text-right">
+                    <button class="btn btn-white btn-icon btn-round d-none d-md-inline-block float-right m-l-10" type="button">
+                        <i class="zmdi zmdi-plus"></i>
+                    </button>
+                        
+                        
+                        <ul class="breadcrumb float-md-right">
+                            <li class="breadcrumb-item"><a href="..\dashboard\index.html"><i class="zmdi zmdi-home"></i>Digital Society</a></li>
+                            <li class="breadcrumb-item active">All Society Members</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">                
+                
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            
+            <div class="tab-content m-t-10">
+                <div class="tab-pane active" id="Permanent">
+                    <div class="row clearfix">
+                        {% for i in mall %}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="card xl-blue member-card doctor">
+                                <div class="body">
+                                    <div class="member-thumb">
+                                        <img src="{{i.pic.url}}" height="150px" width="150px" class="img-fluid" alt="profile-image">                               
+                                    </div>
+                                    <div class="detail">
+                                        <h3 class="m-b-0">{{i.firstname}} {{i.lastname}}</h3><br>
+                                        <h6 class="m-b-0">Block No: {{i.blockno}}</h6><br>
+                                        <h6 class="m-b-0">House No: {{i.houseno}}</h6><br>
+                                        <h6 class="m-b-0">Contact No: {{i.contact}}</h6><br>
+                                        <h6 class="m-b-0">Occupation: {{i.occupation}}</h6><br>
+                                        {% comment %} <ul class="social-links list-inline m-t-20">
+                                            <li><a title="edit" href="#"><i class="zmdi zmdi-edit"></i></a></li>
+                                            <li><a title="delete" href="#"><i class="zmdi zmdi-delete"></i></a></li>
+                                        </ul> {% endcomment %}
+                                        <p class="text-muted">Job Address: {{i.job_address}}</p>                           
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div> 
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+            </div>
+</section>
+{% endblock %} 
